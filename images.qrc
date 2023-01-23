@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>billiards_ex1.gif</file>
+        <file>billiards_ex2.gif</file>
+        <file>3-cushion-Kiss_shots_01_(horizontal).jpg</file>
+        <file>billiards table.png</file>
+        <file>level4.png</file>
+        <file>level1.png</file>
+        <file>level2.png</file>
+        <file>level3.png</file>
+        <file>cueBall.png</file>
+        <file>redBall.png</file>
+        <file>yellowBall.png</file>
+        <file>titleScreen-01.png</file>
+    </qresource>
+</RCC>

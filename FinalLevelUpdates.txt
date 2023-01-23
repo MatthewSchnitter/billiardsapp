@@ -1,0 +1,172 @@
+Final Level Updates
+
+Level 1: This level represents the typical ball placement at the very beginning of the game.
+
+Level 2: This level has a similar layout to that of the example picture in the strategy section of the tutorial page. Try using what you learned to hit both balls.
+
+Level 3: A tougher challenge than the previous two levels. Hint: Try barely glancing off of the red ball. 
+
+
+model.h
+void switchLevel(int);
+void resetLevel();
+
+int currentLevel;
+
+
+model.cpp
+
+direction +/-= 0.05;
+
+void BilliardsModel::switchLevel(int level) {
+
+    switch(level) {
+    case 0:
+        world.addBalls();
+        break;
+
+    case 1:
+        world.levelOne();
+        break;
+
+    case 2:
+	world.levelTwo();
+        break;
+
+    case 3:
+	world.levelThree();
+        break;
+    }
+
+    currentLevel = level;
+
+}
+
+void BilliardsModel::resetLevel() {
+
+    switch(currentLevel) {
+    case 0:
+        world.addBalls();
+        break;
+
+    case 1:
+        world.levelOne();
+        break;
+
+    case 2:
+	world.levelTwo();
+        break;
+
+    case 3:
+	world.levelThree();
+        break;
+    }
+}
+
+
+view.h
+void on_restartButton_clicked();
+void on_level2Button_clicked();
+void on_level3Button_clicked();
+
+signal:
+    void changeLevel(int);
+    void restartLevel();
+
+view.cpp
+connect(this,
+           &BilliardsView::changeLevel,
+           &model,
+           &BilliardsModel::switchLevel);
+
+   connect(this,
+           &BilliardsView::restartLevel,
+           &model,
+           &BilliardsModel::resetLevel);
+
+start button click: emit changeLevel(0);
+level 1 clicked: emit changeLevel(1);
+
+void BilliardsView::on_restartButton_clicked()
+{
+    emit restartLevel();
+}
+
+void BilliardsView::on_level2Button_clicked()
+{
+    ui->navigationStack->setCurrentIndex(playIndex);
+    emit changeLevel(2);
+}
+
+
+void BilliardsView::on_level3Button_clicked()
+{
+    ui->navigationStack->setCurrentIndex(playIndex);
+    emit changeLevel(3);
+}
+
+
+
+
+world.h
+void levelTwo();
+void levelThree();
+
+
+world.cpp
+void World::levelOne() {
+
+    world.DestroyBody(cueBall);
+    world.DestroyBody(redBall);
+    world.DestroyBody(yellowBall);
+
+    ball.position.Set(-0.75f, 0.2f);
+    cueBall = world.CreateBody(&ball);
+    cueBall->CreateFixture(&ballFixture);
+
+    ball.position.Set(0.75f, 0.0f);
+    redBall = world.CreateBody(&ball);
+    redBall->CreateFixture(&ballFixture);
+
+    ball.position.Set(-0.75f, 0.0f);
+    yellowBall = world.CreateBody(&ball);
+    yellowBall->CreateFixture(&ballFixture);
+}
+
+void World::levelTwo() {
+
+    world.DestroyBody(cueBall);
+    world.DestroyBody(redBall);
+    world.DestroyBody(yellowBall);
+
+    ball.position.Set(0.0f, -0.17f);
+    cueBall = world.CreateBody(&ball);
+    cueBall->CreateFixture(&ballFixture);
+
+    ball.position.Set(0.6f, -0.5f);
+    redBall = world.CreateBody(&ball);
+    redBall->CreateFixture(&ballFixture);
+
+    ball.position.Set(0.65f, -0.45f);
+    yellowBall = world.CreateBody(&ball);
+    yellowBall->CreateFixture(&ballFixture);
+}
+
+void World::levelThree() {
+
+    world.DestroyBody(cueBall);
+    world.DestroyBody(redBall);
+    world.DestroyBody(yellowBall);
+
+    ball.position.Set(-0.5f, 0.0f);
+    cueBall = world.CreateBody(&ball);
+    cueBall->CreateFixture(&ballFixture);
+
+    ball.position.Set(0.0f, -0.005f);
+    redBall = world.CreateBody(&ball);
+    redBall->CreateFixture(&ballFixture);
+
+    ball.position.Set(0.9f, 0.0f);
+    yellowBall = world.CreateBody(&ball);
+    yellowBall->CreateFixture(&ballFixture);
+}
